@@ -33,6 +33,11 @@ Route::get('/todo', [DashboardController::class, 'todo']);
 
 Route::get('/team', [DashboardController::class, 'team']);
 
+Route::get('/reports', [DashboardController::class, 'reports']);
+
+Route::get('/calendar', [DashboardController::class, 'calendar']);
+
+Route::get('/projects', [DashboardController::class, 'projects']);
 // 404
 Route::fallback(function () {
     return view('404');
