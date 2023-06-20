@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\AuthController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,17 +15,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('dashbroad');
-});
+// Route::get('/', function () {
+//     return view('dashbroad');
+// });
 
-Route::view('/signin', 'signin');
+Route::get('/', [DashboardController::class, 'index']);
 
-Route::view('/signup', 'signup');
+Route::get('/signin', [AuthController::class, 'signin']);
 
-Route::view('/forgot-password', 'forgot-password');
+Route::get('/signup', [AuthController::class, 'signup']);
 
-Route::view('/reset-password', 'reset-password');
+Route::get('/forgot-password', [AuthController::class, 'forgotPassword']);
+
+Route::get('/reset-password', [AuthController::class, 'resetPassword']);
+
+Route::get('/todo', [DashboardController::class, 'todo']);
+
+Route::get('/team', [DashboardController::class, 'team']);
 
 // 404
 Route::fallback(function () {
