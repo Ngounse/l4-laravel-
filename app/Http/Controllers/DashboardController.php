@@ -11,11 +11,6 @@ class DashboardController extends Controller
         return view('dashboard.dashboard');
     }
     
-    public function todo()
-    {
-        return view('dashboard.todo');
-    }
-    
     public function team()
     {
         return view('dashboard.team');
