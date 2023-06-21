@@ -64,4 +64,12 @@ Route::post('/tasks', [TaskController::class, 'create']);
  * Delete Task
  */
 Route::delete('/tasks/{task}', [TaskController::class, 'delete']);
+
+/**
+ * Edit Task
+ */
+Route::get('/tasks/{task}/edit', [TaskController::class, 'edit']);
+
+Route::post('/tasks/{task}', [TaskController::class, 'update']);
+
 // });

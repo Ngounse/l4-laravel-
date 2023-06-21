@@ -45,4 +45,29 @@ class TaskController extends Controller
 
         return redirect('/tasks');
     }
+
+    public function edit(Task $task)
+    {
+        return view('dashboard.edit', [
+            'task' => $task
+        ]);
+    }
+
+    public function update(Request $request, Task $task)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:255',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('/tasks/edit/' . $task->id)
+                ->withInput()
+                ->withErrors($validator);
+        }
+
+        $task->name = $request->name;
+        $task->save();
+
+        return redirect('/tasks');
+    }
 }

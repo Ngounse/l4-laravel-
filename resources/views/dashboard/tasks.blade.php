@@ -14,7 +14,7 @@
         <div class="form-group py-2 flex gap-2 items-center">
             <label for="task" class="col-sm-3 control-label text-primary-300 ">Task</label>
             <div class="col-sm-6">
-                <input type="text" class="text-black rounded-sm" name="name" id="task-name" class="form-control">
+                <input type="text" class="text-black px-2 rounded-sm" name="name" id="task-name" class="form-control">
             </div>
             <!-- Add Task Button -->
             <div class="form-group">
@@ -54,12 +54,19 @@
                         <div>{{ $task->name }}</div>
                     </td>
 
+                    <!-- Edit Button -->
+                    <td>
+                        <a href="{{ url('tasks/'.$task->id.'/edit') }}" class="{{ (request()->is('tasks*')) ? 'atc text-white bg-primary-600 hover:bg-primary-700' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-sm px-3 py-1 text-sm font-medium">
+                            Edit
+                        </a>
+                    </td>
+
                     <!-- Delete Button -->
                     <td>
                         <form action="{{ url('tasks/'.$task->id) }}" method="POST">
                             {!! csrf_field() !!}
                             {!! method_field('DELETE') !!}
-                            @section('button-text', 'Delete Task')
+                            @section('button-text-err', 'Delete')
                             @include('components.errButton')
 
                         </form>
