@@ -62,6 +62,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('/tasks/{task}', [TaskController::class, 'delete']);
     Route::get('/tasks/{task}/edit', [TaskController::class, 'edit']);
     Route::post('/tasks/{task}', [TaskController::class, 'update']);
+    Route::post('/tasks/{task}/fav', [TaskController::class, 'fav']);
+    Route::post('/tasks/{task}/unfav', [TaskController::class, 'unfav']);
+    Route::post('/tasks/{task}/done', [TaskController::class, 'done']);
+    Route::post('/tasks/{task}/pending', [TaskController::class, 'pending']);
+    Route::post('/tasks/{task}/inprogress', [TaskController::class, 'inprogress']);
+    Route::post('/tasks/{task}/cancel', [TaskController::class, 'cancel']);
 });
 
 // 404

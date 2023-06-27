@@ -29,14 +29,14 @@ class StatusSeeder extends Seeder
         ]);
         Status::create([
             'name' => 'pending',
-            'color' => 'lightorange',
+            'color' => 'orange',
         ]);
         Status::create([
             'name' => 'canceled',
             'color' => 'red',
         ]);
         Status::create([
-            'name' => 'fav',
+            'name' => 'favorited',
             'color' => 'lightpink',
         ]);
         Status::create([

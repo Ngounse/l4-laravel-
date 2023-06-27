@@ -6,13 +6,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Task;
+use App\Models\Status;
+
 
 class TaskController extends Controller
 {
 
     public function index(Task $tasks)
     {
-        $tasks = Task::with('status')->orderBy('created_at', 'desc')->get();
+        $tasks = Task::with('status')->orderBy('updated_at', 'desc')->get();
         return view('dashboard.tasks', [
             'tasks' => $tasks
         ]);
@@ -61,7 +63,7 @@ class TaskController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect('/tasks/edit/' . $task->id)
+            return redirect('/tasks' . '/' . $task->id . '/' . 'edit')
                 ->withInput()
                 ->withErrors($validator);
         }
@@ -69,6 +71,45 @@ class TaskController extends Controller
         $task->name = $request->name;
         $task->save();
 
+        return redirect('/tasks');
+    }
+
+    public function fav(Task $task)
+    {
+        $task->status_id = 6;
+        $task->save();
+        return redirect('/tasks');
+    }
+
+    public function unFav(Task $task)
+    {
+        $task->status_id = 1;
+        $task->save();
+        return redirect('/tasks');
+    }
+
+    public function done(Task $task)
+    {
+        $task->status_id = 3;
+        $task->save();
+        return redirect('/tasks');
+    }
+    public function pending(Task $task)
+    {
+        $task->status_id = 4;
+        $task->save();
+        return redirect('/tasks');
+    }
+    public function cancel(Task $task)
+    {
+        $task->status_id = 5;
+        $task->save();
+        return redirect('/tasks');
+    }
+    public function inprogress(Task $task)
+    {
+        $task->status_id = 2;
+        $task->save();
         return redirect('/tasks');
     }
 }
