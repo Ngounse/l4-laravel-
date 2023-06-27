@@ -26,50 +26,45 @@ use App\Models\Task;
 // });
 
 Route::get('/', [DashboardController::class, 'index']);
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/dashboard', [DashboardController::class, 'index']);
+    Route::get('/team', [DashboardController::class, 'team']);
+    Route::get('/reports', [DashboardController::class, 'reports']);
+    Route::get('/calendar', [DashboardController::class, 'calendar']);
+    Route::get('/projects', [DashboardController::class, 'projects']);
+    Route::get('/logout', [AuthController::class, 'logout']);
+});
+// Route::get('/dashboard', [DashboardController::class, 'index']);
 
-Route::get('/signin', [AuthController::class, 'signin']);
+Route::get('/signin', [AuthController::class, 'signin'])->name('login');
 
 Route::get('/signup', [AuthController::class, 'signup']);
+
+Route::get('/logout', [AuthController::class, 'logout']);
+
+Route::post('auth/signup', [AuthController::class, 'createUser']);
+
+Route::post('auth/signin', [AuthController::class, 'loginUser']);
 
 Route::get('/forgot-password', [AuthController::class, 'forgotPassword']);
 
 Route::get('/reset-password', [AuthController::class, 'resetPassword']);
 
-// Route::get('/todo', [DashboardController::class, 'todo']);
+// without auth
+// Route::get('/team', [DashboardController::class, 'team']);
+// Route::get('/reports', [DashboardController::class, 'reports']);
+// Route::get('/calendar', [DashboardController::class, 'calendar']);
+// Route::get('/projects', [DashboardController::class, 'projects']);
 
-Route::get('/team', [DashboardController::class, 'team']);
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/tasks', [TaskController::class, 'index']);
+    Route::post('/tasks', [TaskController::class, 'create']);
+    Route::delete('/tasks/{task}', [TaskController::class, 'delete']);
+    Route::get('/tasks/{task}/edit', [TaskController::class, 'edit']);
+    Route::post('/tasks/{task}', [TaskController::class, 'update']);
+});
 
-Route::get('/reports', [DashboardController::class, 'reports']);
-
-Route::get('/calendar', [DashboardController::class, 'calendar']);
-
-Route::get('/projects', [DashboardController::class, 'projects']);
 // 404
 Route::fallback(function () {
     return view('404');
 });
-
-// Route::group(['middleware' => 'web'], function () {
-
-/**
- * Show Task Dashboard
- */
-Route::get('/tasks', [TaskController::class, 'index']);
-
-/**
- * Add New Task
- */
-Route::post('/tasks', [TaskController::class, 'create']);
-/**
- * Delete Task
- */
-Route::delete('/tasks/{task}', [TaskController::class, 'delete']);
-
-/**
- * Edit Task
- */
-Route::get('/tasks/{task}/edit', [TaskController::class, 'edit']);
-
-Route::post('/tasks/{task}', [TaskController::class, 'update']);
-
-// });

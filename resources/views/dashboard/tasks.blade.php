@@ -42,7 +42,8 @@
             <!-- Table Headings -->
             <thead>
                 <th>Task</th>
-                <th>Action </th>
+                <th>Action</th>
+                <th>Status</th>
             </thead>
 
             <!-- Table Body -->
@@ -50,32 +51,45 @@
                 @foreach ($tasks as $task)
                 <tr class="">
                     <!-- Task Name -->
-                    <td class="table-text">
+                    <td class="table-text w-1/2">
                         <div>{{ $task->name }}</div>
                     </td>
 
-                    <!-- Edit Button -->
-                    <td>
-                        <a href="{{ url('tasks/'.$task->id.'/edit') }}" class="{{ (request()->is('tasks*')) ? 'atc text-white bg-primary-600 hover:bg-primary-700' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-sm px-3 py-1 text-sm font-medium">
-                            Edit
-                        </a>
-                    </td>
-
-                    <!-- Delete Button -->
-                    <td>
+                    <td class="flex content-center justify-items-center items-center gap-0.5">
+                        <form action="{{ url('tasks/'.$task->id.'/edit') }}">
+                            @section('button-text-info', 'Edit')
+                            @include('components.infoButton')
+                        </form>
+                        <form action="{{ url('tasks/'.$task->id.'/done') }}" method="POST">
+                            {!! csrf_field() !!}
+                            @section('button-text-suss', 'Done')
+                            @include('components.sussButton')
+                        </form>
                         <form action="{{ url('tasks/'.$task->id) }}" method="POST">
                             {!! csrf_field() !!}
                             {!! method_field('DELETE') !!}
                             @section('button-text-err', 'Delete')
                             @include('components.errButton')
-
+                        </form>
+                        {{-- favite --}}
+                        <form action="{{ url('tasks/'.$task->id.'/fav') }}" method="POST">
+                            {!! csrf_field() !!}
+                            @section('button-text-fav', 'Fav')
+                            @include('components.favButton')
                         </form>
                     </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
+
+                    <td class="text-center">
+                        <div>{{ $task->status->name }}</div>
+                        {{-- <div>{{$task->user->name}}
+    </div> --}}
+    </td>
+
+    </tr>
+    @endforeach
+    </tbody>
+    </table>
+</div>
 </div>
 @endif
 

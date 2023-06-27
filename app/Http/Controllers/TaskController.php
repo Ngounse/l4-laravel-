@@ -12,7 +12,7 @@ class TaskController extends Controller
 
     public function index(Task $tasks)
     {
-        $tasks = Task::orderBy('created_at', 'desc')->get();
+        $tasks = Task::with('status')->orderBy('created_at', 'desc')->get();
         return view('dashboard.tasks', [
             'tasks' => $tasks
         ]);
@@ -34,6 +34,7 @@ class TaskController extends Controller
 
         $task = new Task;
         $task->name = $request->name;
+        $task->user_id = auth()->user()->id;
         $task->save();
 
         return redirect('/tasks');

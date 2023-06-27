@@ -14,6 +14,23 @@ $ pnpm dev
 
 ```bash
 $ php artisan make:migration create_tasks_table --create=tasks
+# update the migration file
+$ php artisan migrate
+```
+
+#### wenning erase database
+
+```bash
+$ php artisan migrate:fresh
+```
+
+#### seed
+
+```bash
+$ php artisan db:seed
+# or in specific
+$ php artisan db:seed --class=StatusSeeder
+
 ```
 
 #### migrate
